@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+# recoil-emotion-todolist
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- **`Stack`** : Vite, React, Recoil, Emotion, Prettierr, Eslint
 
-Currently, two official plugins are available:
+## 설명
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+`Recoil`, `Emotion`를 간단한 투두 리스트 실습을 통해
+공부하려고 합니다.
 
-## Expanding the ESLint configuration
+Recoil
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- 상태 관리 라이브러리
 
-- Configure the top-level `parserOptions` property like this:
+Emotion
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Styled Components 보다 좀 더 가벼운 JS-in-CSS
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- 투두 리스트를 보여줍니다.
+- 투두 리스트를 작성 후 추가할 수 있습니다.
+- 투두 리스트를 완료(체크)할 수 있습니다.
+- 완료 또는 불필요한 투두 리스트를 삭제할 수 있습니다.
+
+## 작업 화면
