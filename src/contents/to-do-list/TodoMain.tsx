@@ -1,7 +1,9 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { MouseEvent } from 'react';
+import { ChangeEvent, MouseEvent } from 'react';
 import { theme } from '../../styles/Theme';
+import { todoState, todoTextState } from '../../atom/TodoState';
+import { useRecoilState } from 'recoil';
 
 const DisHidden = css`
   position: absolute;
@@ -110,11 +112,28 @@ const TodoTxt = styled.span`
 `;
 
 const TodoMain = () => {
+  const [todoList, setTodoList] = useRecoilState(todoState);
+  const [todoText, setTodoText] = useRecoilState(todoTextState);
+
+  const inputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTodoText(e.target.value);
+    console.log(todoText);
+  };
+
   const eventPaintTodo = (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => {
     e.preventDefault();
-    console.log('생성');
+    setTodoList((prev) => [
+      ...prev,
+      {
+        id: todoList.length,
+        text: todoText,
+        isComplete: false,
+      },
+    ]);
+    setTodoText('');
+    console.log('생성', todoList);
   };
 
   const eventDeleteTodo = () => {
@@ -132,6 +151,8 @@ const TodoMain = () => {
             name="editor"
             id="editor"
             placeholder="오늘 할 일 작성하기"
+            value={todoText}
+            onChange={inputOnChange}
           />
           <PaintBtn onClick={(e) => eventPaintTodo(e)}>추가</PaintBtn>
         </EditorWrap>
@@ -140,20 +161,15 @@ const TodoMain = () => {
       <ContWrap>
         <Title>To Do List 📝 </Title>
         <TodoListWrap>
-          <TodoList>
-            <TodoTxtWrap htmlFor="complete_1">
-              <input type="checkbox" name="" id="complete_1" />
-              <TodoTxt>할 일 작성하기</TodoTxt>
-            </TodoTxtWrap>
-            <DeleteBtn onClick={eventDeleteTodo}>삭제</DeleteBtn>
-          </TodoList>
-          <TodoList>
-            <TodoTxtWrap htmlFor="complete_2">
-              <input type="checkbox" name="" id="complete_2" />
-              <TodoTxt>할 일 작성하기</TodoTxt>
-            </TodoTxtWrap>
-            <DeleteBtn onClick={eventDeleteTodo}>삭제</DeleteBtn>
-          </TodoList>
+          {todoList.map((todoItem) => (
+            <TodoList key={todoItem.id}>
+              <TodoTxtWrap htmlFor={`complete_${todoItem.id}`}>
+                <input type="checkbox" name="" id={`complete_${todoItem.id}`} />
+                <TodoTxt>{todoItem.text}</TodoTxt>
+              </TodoTxtWrap>
+              <DeleteBtn onClick={eventDeleteTodo}>삭제</DeleteBtn>
+            </TodoList>
+          ))}
         </TodoListWrap>
       </ContWrap>
     </MainContainer>
