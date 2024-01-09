@@ -1,8 +1,9 @@
+import TodoMain from './contents/to-do-list/TodoMain';
+
 function App() {
   return (
     <>
-      <div>d</div>
-      <div>dd</div>
+      <TodoMain />
     </>
   );
 }
