@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { ChangeEvent, MouseEvent } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import { theme } from '../../styles/Theme';
 import { todoState, todoTextState } from '../../atom/TodoState';
 import { useRecoilState } from 'recoil';
@@ -67,6 +67,9 @@ const PaintBtn = styled.button`
   background-color: ${theme.colors.point};
   color: #fff;
   flex: 1;
+  &:disabled {
+    background-color: ${theme.colors.gray};
+  }
 `;
 
 const DeleteBtn = styled.button`
@@ -114,10 +117,21 @@ const TodoTxt = styled.span`
 const TodoMain = () => {
   const [todoList, setTodoList] = useRecoilState(todoState);
   const [todoText, setTodoText] = useRecoilState(todoTextState);
+  const paintBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (paintBtnRef.current) {
+      if (todoText.length > 0) {
+        paintBtnRef.current.removeAttribute('disabled');
+        console.log('추가 가능', paintBtnRef.current);
+      } else {
+        paintBtnRef.current.setAttribute('disabled', 'disabled');
+      }
+    }
+  }, [todoText.length]);
 
   const inputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTodoText(e.target.value);
-    console.log(todoText);
   };
 
   const eventPaintTodo = (
@@ -161,7 +175,9 @@ const TodoMain = () => {
             value={todoText}
             onChange={inputOnChange}
           />
-          <PaintBtn onClick={(e) => eventPaintTodo(e)}>추가</PaintBtn>
+          <PaintBtn ref={paintBtnRef} onClick={(e) => eventPaintTodo(e)}>
+            추가
+          </PaintBtn>
         </EditorWrap>
       </ContWrap>
 
