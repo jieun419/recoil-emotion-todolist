@@ -174,7 +174,10 @@ const TodoMain = () => {
                 <input type="checkbox" name="" id={`complete_${todoItem.id}`} />
                 <TodoTxt>{todoItem.text}</TodoTxt>
               </TodoTxtWrap>
-              <DeleteBtn id={todoItem.id} onClick={(e) => eventDeleteTodo(e)}>
+              <DeleteBtn
+                id={String(todoItem.id)}
+                onClick={(e) => eventDeleteTodo(e)}
+              >
                 삭제
               </DeleteBtn>
             </TodoList>
