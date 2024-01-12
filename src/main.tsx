@@ -10,9 +10,10 @@ import { theme } from './styles/Theme.ts';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={theme}> </ThemeProvider>
-      <GlobalStyles />
-      <App />
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <App />
+      </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>,
 );
