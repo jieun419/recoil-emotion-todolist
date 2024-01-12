@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useRef } from 'react';
 import { theme } from '../../styles/Theme';
 import { todoState, todoTextState } from '../../atom/TodoState';
 import { useRecoilState } from 'recoil';
