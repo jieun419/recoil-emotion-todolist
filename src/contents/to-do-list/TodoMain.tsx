@@ -127,16 +127,23 @@ const TodoMain = () => {
     setTodoList((prev) => [
       ...prev,
       {
-        id: todoList.length,
+        id: Math.random() * todoList.length + 1,
         text: todoText,
         isComplete: false,
       },
     ]);
     setTodoText('');
-    console.log('생성', todoList);
+    console.log('생성');
   };
 
-  const eventDeleteTodo = () => {
+  const eventDeleteTodo = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+  ) => {
+    const newTodo = todoList.filter(
+      (el) => el.id !== Number(e.currentTarget.id),
+    );
+
+    setTodoList(newTodo);
     console.log('삭제');
   };
 
@@ -167,7 +174,9 @@ const TodoMain = () => {
                 <input type="checkbox" name="" id={`complete_${todoItem.id}`} />
                 <TodoTxt>{todoItem.text}</TodoTxt>
               </TodoTxtWrap>
-              <DeleteBtn onClick={eventDeleteTodo}>삭제</DeleteBtn>
+              <DeleteBtn id={todoItem.id} onClick={(e) => eventDeleteTodo(e)}>
+                삭제
+              </DeleteBtn>
             </TodoList>
           ))}
         </TodoListWrap>
