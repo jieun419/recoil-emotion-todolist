@@ -1,10 +1,19 @@
 import emotionReset from 'emotion-reset';
 import { Global, css } from '@emotion/react';
+import { theme } from './Theme';
+import check_off from '../assets/images/icons/check_off.svg';
+import check_on from '../assets/images/icons/check_on.svg';
 
 export default function GlobalStyles() {
   return (
     <Global
       styles={css`
+        :root {
+          --point-color: ${theme.colors.point};
+          --check-off: url(${check_off});
+          --check-on: url(${check_on});
+        }
+
         ${emotionReset}
         @font-face {
           font-family: 'GmarketSansMedium';
@@ -48,6 +57,35 @@ export default function GlobalStyles() {
           background-color: transparent;
           border: 0;
           cursor: pointer;
+        }
+
+        label:has(input[type='checkbox']:checked) {
+          span {
+            color: #ccc;
+            text-decoration: line-through;
+          }
+        }
+
+        input[type='checkbox'] {
+          display: none;
+        }
+
+        label > div {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          border: 1px solid #dcdcdc;
+          border-radius: 5px;
+          cursor: pointer;
+          background: #fff var(--check-off) no-repeat center center;
+          background-size: 10px;
+          transition: all 0.3s;
+        }
+
+        input[type='checkbox']:checked + div {
+          background: var(--point-color) var(--check-on) no-repeat center center;
+          border-color: transparent;
+          background-size: 10px;
         }
 
         #root {

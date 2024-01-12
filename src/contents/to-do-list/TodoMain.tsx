@@ -4,6 +4,7 @@ import { ChangeEvent, MouseEvent, useEffect, useRef } from 'react';
 import { theme } from '../../styles/Theme';
 import { todoState, todoTextState } from '../../atom/TodoState';
 import { useRecoilState } from 'recoil';
+import NotList from '../../components/not/NotList';
 
 const DisHidden = css`
   position: absolute;
@@ -103,6 +104,8 @@ const TodoTxtWrap = styled.label`
   flex: 2;
 `;
 
+const CompleteCheck = styled.input``;
+
 const TodoList = styled.li`
   ${DisFlex}
   align-items: center;
@@ -164,7 +167,7 @@ const TodoMain = () => {
   return (
     <MainContainer>
       <ContWrap>
-        <Title>새로운 할 일 추가하기 ✏️</Title>
+        <Title>✏️ 새로운 할 일 추가하기</Title>
         <EditorWrap action="submit">
           <Label htmlFor="editor">오늘 할 일 작성하기</Label>
           <EditorInput
@@ -182,23 +185,32 @@ const TodoMain = () => {
       </ContWrap>
 
       <ContWrap>
-        <Title>To Do List 📝 </Title>
-        <TodoListWrap>
-          {todoList.map((todoItem) => (
-            <TodoList key={todoItem.id}>
-              <TodoTxtWrap htmlFor={`complete_${todoItem.id}`}>
-                <input type="checkbox" name="" id={`complete_${todoItem.id}`} />
-                <TodoTxt>{todoItem.text}</TodoTxt>
-              </TodoTxtWrap>
-              <DeleteBtn
-                id={String(todoItem.id)}
-                onClick={(e) => eventDeleteTodo(e)}
-              >
-                삭제
-              </DeleteBtn>
-            </TodoList>
-          ))}
-        </TodoListWrap>
+        <Title>To Do List </Title>
+        {todoList.length === 0 ? (
+          <NotList />
+        ) : (
+          <TodoListWrap>
+            {todoList.map((todoItem) => (
+              <TodoList key={todoItem.id}>
+                <TodoTxtWrap htmlFor={`complete_${todoItem.id}`}>
+                  <CompleteCheck
+                    type="checkbox"
+                    name=""
+                    id={`complete_${todoItem.id}`}
+                  />
+                  <div></div>
+                  <TodoTxt>{todoItem.text}</TodoTxt>
+                </TodoTxtWrap>
+                <DeleteBtn
+                  id={String(todoItem.id)}
+                  onClick={(e) => eventDeleteTodo(e)}
+                >
+                  삭제
+                </DeleteBtn>
+              </TodoList>
+            ))}
+          </TodoListWrap>
+        )}
       </ContWrap>
     </MainContainer>
   );
